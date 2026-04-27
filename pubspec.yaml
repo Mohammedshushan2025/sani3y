@@ -24,6 +24,8 @@ dependencies:
   equatable: ^2.0.8
   flutter_secure_storage: ^10.0.0
   omni_image: ^0.0.5
+  geolocator: ^14.0.2
+  image_picker: ^1.1.2
 
  ##network_packages
   get_it: ^9.2.1

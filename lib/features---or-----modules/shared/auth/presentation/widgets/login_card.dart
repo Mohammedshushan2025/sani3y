@@ -18,6 +18,7 @@ class LoginCard extends StatelessWidget {
   final VoidCallback onTechnicianSignIn;
   final VoidCallback onSignUp;
   final VoidCallback onForgotPassword;
+  final String technicianToggleLabel;
 
   const LoginCard({
     super.key,
@@ -31,6 +32,7 @@ class LoginCard extends StatelessWidget {
     required this.onTechnicianSignIn,
     required this.onSignUp,
     required this.onForgotPassword,
+    this.technicianToggleLabel = 'دخول كصنايعي',
   });
 
   @override
@@ -101,7 +103,7 @@ class LoginCard extends StatelessWidget {
 
           // ── Sign In as Technician ──
           OutlinedGradientButton(
-            label: 'دخول كصنايعي',
+            label: technicianToggleLabel,
             onTap: onTechnicianSignIn,
           ),
 

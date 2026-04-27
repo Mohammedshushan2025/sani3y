@@ -10,7 +10,7 @@ String getLottie(String lottieName) => 'assets/lottie/$lottieName.json';
 
 // bool isEn = RouteManager.currentContext.locale.languageCode == 'en';
 
-// String dashboardURL = "https://itarah-beta.dafa.sa";
+String baseURL = "https://itarah-beta.dafa.sa";
 
 void closeKeyboard ()=> FocusManager.instance.primaryFocus?.unfocus();
 

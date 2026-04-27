@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/login_background.dart';
-import '../widgets/login_card.dart';
-import '../widgets/login_header.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
-import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/views/technician_login_view.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/login_card.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/login_header.dart';
+import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/widgets/technician_login_background.dart';
+import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/views/technician_register_view.dart';
 
-// ════════════════════════════════════════════════
-//  LOGIN VIEW — صنايعي
-// ════════════════════════════════════════════════
-
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class TechnicianLoginView extends StatefulWidget {
+  const TechnicianLoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<TechnicianLoginView> createState() => _TechnicianLoginViewState();
 }
 
-class _LoginViewState extends State<LoginView>
+class _TechnicianLoginViewState extends State<TechnicianLoginView>
     with SingleTickerProviderStateMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -59,7 +55,7 @@ class _LoginViewState extends State<LoginView>
       body: Stack(
         children: [
           // ── Gradient background ──
-          const LoginBackground(),
+          const TechnicianLoginBackground(),
 
           // ── Scrollable content ──
           SafeArea(
@@ -90,9 +86,10 @@ class _LoginViewState extends State<LoginView>
                         onTogglePassword: () => setState(
                             () => _obscurePassword = !_obscurePassword),
                         onSignIn: _handleSignIn,
-                        onTechnicianSignIn: _handleTechnicianSignIn,
+                        onTechnicianSignIn: _handleUserSignIn,
                         onSignUp: _handleSignUp,
                         onForgotPassword: _handleForgotPassword,
+                        technicianToggleLabel: 'دخول كمستخدم',
                       ),
 
                       const SizedBox(height: 32),
@@ -107,11 +104,17 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  // ── Actions (navigate / call your BLoC/Cubit here) ──
-  void _handleSignIn() {}
-  void _handleTechnicianSignIn() {
-    RouteManager.navigateReplacement(const TechnicianLoginView());
+  void _handleSignIn() {
+    // Implement technician login logic
   }
-  void _handleSignUp() {}
+
+  void _handleUserSignIn() {
+    RouteManager.navigateReplacement(const LoginView());
+  }
+
+  void _handleSignUp() {
+    RouteManager.navigateTo(const TechnicianRegisterView());
+  }
+
   void _handleForgotPassword() {}
 }

@@ -1,107 +1,108 @@
-// import 'package:dio/dio.dart';
-// import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
-// class ApiService {
-//   final Dio _dio;
-//   ApiService(this._dio);
-//   Future<Map<String, dynamic>> get({
-//     required String endPoint,
-//     Map<String, dynamic>? queryParameters,
-//   }) async {
-//     var response = await _dio.get(endPoint, queryParameters: queryParameters);
-//     return response.data;
-//   }
+// ════════════════════════════════════════════════
+//  DIO HELPER — صنايعي
+//  Central HTTP client with timeout, logging, and
+//  helpers for GET / POST (JSON + multipart) / PUT / PATCH / DELETE.
+// ════════════════════════════════════════════════
 
-//   Future<Map<String, dynamic>> post({
-//     required String endPoint,
-//     Map<String, dynamic>? data,
-//     BuildContext? context,
-//   }) async {
-//     var response = await _dio.post(endPoint, data: data);
-//     return response.data;
-//   }
+class DioHelper {
+  static late Dio _dio;
 
-//   Future<Map<String, dynamic>> put({
-//     required String endPoint,
-//     required Map<String, dynamic> data,
-//     required BuildContext context,
-//   }) async {
-//     var response = await _dio.put(endPoint, data: data);
-//     return response.data;
-//   }
+  // ── Initialise once in main() ──────────────────
+  static void init() {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://easyservice.pythonanywhere.com/api/accounts/',
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        sendTimeout: const Duration(seconds: 30),
+        receiveDataWhenStatusError: true,
+        headers: {
+          'Accept': 'application/json',
+        },
+      ),
+    );
 
-//   Future<Map<String, dynamic>> delete({
-//     required String endPoint,
-//     Map<String, dynamic>? data,
-//     required BuildContext context,
-//   }) async {
-//     var response = await _dio.delete(endPoint, data: data);
-//     return response.data;
-//   }
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        error: true,
+        requestHeader: false,
+        responseHeader: false,
+      ),
+    );
+  }
 
-//   Future<Map<String, dynamic>> patch({
-//     required String endPoint,
-//     required Map<String, dynamic> data,
-//     required BuildContext context,
-//   }) async {
-//     var response = await _dio.patch(endPoint, data: data, options: Options());
-//     return response.data;
-//   }
+  // ── Authorization helper ───────────────────────
+  static void _setAuth(String? token) {
+    if (token != null && token.isNotEmpty) {
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+    } else {
+      _dio.options.headers.remove('Authorization');
+    }
+  }
 
-//   Future<Map<String, dynamic>> uploadFormData({
-//     required String endPoint,
-//     required FormData formData,
-//   }) async {
-//     final response = await _dio.post(
-//       endPoint,
-//       data: formData,
-//       options: Options(headers: {'Content-Type': 'multipart/form-data'}),
-//     );
-//     return response.data;
-//   }
+  // ── GET ───────────────────────────────────────
+  static Future<Response> getData({
+    required String url,
+    Map<String, dynamic>? query,
+    String? token,
+  }) async {
+    _setAuth(token);
+    return _dio.get(url, queryParameters: query);
+  }
 
-//   Future<Map<String, dynamic>> uploadFile({
-//     required String endPoint,
-//     required Map<String, dynamic> data,
-//     required Map<String, dynamic> files,
-//   }) async {
-//     var formData = FormData.fromMap(data);
+  // ── POST (JSON or FormData/multipart) ─────────
+  static Future<Response> postData({
+    required String url,
+    dynamic data,
+    Map<String, dynamic>? query,
+    String? token,
+    bool isFormData = false,
+  }) async {
+    _setAuth(token);
+    return _dio.post(
+      url,
+      queryParameters: query,
+      data: data,
+      options: isFormData
+          ? Options(contentType: 'multipart/form-data')
+          : null,
+    );
+  }
 
-//     for (var entry in files.entries) {
-//       if (entry.value is List<String>) {
-//         for (var path in entry.value) {
-//           if (path.isNotEmpty) {
-//             formData.files.add(
-//               MapEntry(entry.key, await MultipartFile.fromFile(path)),
-//             );
-//           }
-//         }
-//       } else if (entry.value is String) {
-//         if (entry.value.isNotEmpty) {
-//           formData.files.add(
-//             MapEntry(entry.key, await MultipartFile.fromFile(entry.value)),
-//           );
-//         }
-//       }
-//     }
+  // ── PUT ───────────────────────────────────────
+  static Future<Response> putData({
+    required String url,
+    required dynamic data,
+    Map<String, dynamic>? query,
+    String? token,
+  }) async {
+    _setAuth(token);
+    return _dio.put(url, queryParameters: query, data: data);
+  }
 
-//     var response = await _dio.post(endPoint, data: formData);
-//     return response.data;
-//   }
+  // ── PATCH ─────────────────────────────────────
+  static Future<Response> patchData({
+    required String url,
+    required dynamic data,
+    Map<String, dynamic>? query,
+    String? token,
+  }) async {
+    _setAuth(token);
+    return _dio.patch(url, queryParameters: query, data: data);
+  }
 
-//   Future<Map<String, dynamic>> downloadFile({
-//     required String endPoint,
-//     required String savePath,
-//   }) async {
-//     var response = await _dio.download(endPoint, savePath);
-//     return response.data;
-//   }
-
-//   Future<Map<String, dynamic>> downloadFileWithProgress({
-//     required String endPoint,
-//     required String savePath,
-//   }) async {
-//     var response = await _dio.download(endPoint, savePath);
-//     return response.data;
-//   }
-// }
+  // ── DELETE ────────────────────────────────────
+  static Future<Response> deleteData({
+    required String url,
+    dynamic data,
+    Map<String, dynamic>? query,
+    String? token,
+  }) async {
+    _setAuth(token);
+    return _dio.delete(url, queryParameters: query, data: data);
+  }
+}
