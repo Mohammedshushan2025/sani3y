@@ -2,6 +2,7 @@ import 'package:clean_arc/features---or-----modules/shared/auth/presentation/vie
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'app_dropdown_field.dart';
 import 'app_text_field.dart';
 import 'register_gradient_button.dart';
 import 'sign_in_row.dart';
@@ -16,9 +17,12 @@ class RegisterCard extends StatelessWidget {
   final bool obscurePassword;
   final bool obscureConfirmPassword;
   final UserType selectedUserType;
+  final List<Map<String, String>> categories;
+  final String? selectedCategoryId;
   final VoidCallback onTogglePassword;
   final VoidCallback onToggleConfirmPassword;
   final ValueChanged<UserType> onUserTypeChanged;
+  final ValueChanged<String?> onCategoryChanged;
   final VoidCallback onCreateAccount;
   final VoidCallback onSignIn;
 
@@ -32,9 +36,12 @@ class RegisterCard extends StatelessWidget {
     required this.obscurePassword,
     required this.obscureConfirmPassword,
     required this.selectedUserType,
+    required this.categories,
+    required this.selectedCategoryId,
     required this.onTogglePassword,
     required this.onToggleConfirmPassword,
     required this.onUserTypeChanged,
+    required this.onCategoryChanged,
     required this.onCreateAccount,
     required this.onSignIn,
   });
@@ -126,6 +133,23 @@ class RegisterCard extends StatelessWidget {
             selectedType: selectedUserType,
             onChanged: onUserTypeChanged,
           ),
+
+          if (selectedUserType == UserType.technician) ...[
+            const SizedBox(height: 18),
+            AppDropdownField<String>(
+              label: 'القسم',
+              hint: 'اختر القسم الذي تعمل به',
+              prefixIcon: Icons.work_outline_rounded,
+              value: selectedCategoryId,
+              items: categories.map((cat) {
+                return DropdownMenuItem<String>(
+                  value: cat['id'],
+                  child: Text(cat['name'] ?? ''),
+                );
+              }).toList(),
+              onChanged: onCategoryChanged,
+            ),
+          ],
 
           const SizedBox(height: 28),
 

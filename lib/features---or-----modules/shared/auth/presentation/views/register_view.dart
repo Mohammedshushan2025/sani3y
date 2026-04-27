@@ -30,6 +30,15 @@ class _RegisterViewState extends State<RegisterView>
   bool _obscureConfirmPassword = true;
   UserType _selectedUserType = UserType.customer;
 
+  // TODO: Replace with data from API
+  final List<Map<String, String>> _categories = [
+    {'id': '1', 'name': 'سباكة'},
+    {'id': '2', 'name': 'كهرباء'},
+    {'id': '3', 'name': 'نجارة'},
+    {'id': '4', 'name': 'نقاشة'},
+  ];
+  String? _selectedCategoryId;
+
   late AnimationController _animController;
   late Animation<double> _fadeAnim;
   late Animation<Offset> _slideAnim;
@@ -95,12 +104,16 @@ class _RegisterViewState extends State<RegisterView>
                         obscurePassword: _obscurePassword,
                         obscureConfirmPassword: _obscureConfirmPassword,
                         selectedUserType: _selectedUserType,
+                        categories: _categories,
+                        selectedCategoryId: _selectedCategoryId,
                         onTogglePassword: () => setState(
                             () => _obscurePassword = !_obscurePassword),
                         onToggleConfirmPassword: () => setState(() =>
                             _obscureConfirmPassword = !_obscureConfirmPassword),
                         onUserTypeChanged: (type) =>
                             setState(() => _selectedUserType = type),
+                        onCategoryChanged: (categoryId) =>
+                            setState(() => _selectedCategoryId = categoryId),
                         onCreateAccount: _handleCreateAccount,
                         onSignIn: _handleSignIn,
                       ),
