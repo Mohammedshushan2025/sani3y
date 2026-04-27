@@ -1,4 +1,12 @@
+import 'package:clean_arc/core/routes/navigator_push.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/splash_background.dart';
+import '../widgets/splash_loader.dart';
+import '../widgets/splash_logo.dart';
+import '../widgets/splash_tagline.dart';
+import '../widgets/splash_title.dart';
 
 // ════════════════════════════════════════════════
 //  SPLASH VIEW — صنايعي
@@ -49,6 +57,12 @@ class _SplashViewState extends State<SplashView>
     );
 
     _controller.forward();
+
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted) {
+        RouteManager.navigateTo(const LoginView());
+      }
+    });
   }
 
   @override
@@ -60,7 +74,7 @@ class _SplashViewState extends State<SplashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _SplashBackground(
+      body: SplashBackground(
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +87,7 @@ class _SplashViewState extends State<SplashView>
                   scale: _scaleAnim.value,
                   child: child,
                 ),
-                child: const _SplashLogo(),
+                child: const SplashLogo(),
               ),
               const SizedBox(height: 28),
               // ── App name ──
@@ -86,7 +100,7 @@ class _SplashViewState extends State<SplashView>
                     child: child,
                   ),
                 ),
-                child: const _SplashTitle(),
+                child: const SplashTitle(),
               ),
               const SizedBox(height: 12),
               // ── Tagline ──
@@ -96,7 +110,7 @@ class _SplashViewState extends State<SplashView>
                   opacity: _fadeAnim.value,
                   child: child,
                 ),
-                child: const _SplashTagline(),
+                child: const SplashTagline(),
               ),
               const Spacer(flex: 2),
               // ── Loading indicator ──
@@ -106,235 +120,13 @@ class _SplashViewState extends State<SplashView>
                   opacity: _fadeAnim.value,
                   child: child,
                 ),
-                child: const _SplashLoader(),
+                child: const SplashLoader(),
               ),
               const SizedBox(height: 48),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// Background with mesh gradient + decorative circles
-// ─────────────────────────────────────────────
-class _SplashBackground extends StatelessWidget {
-  final Widget child;
-  const _SplashBackground({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF6C63FF), // violet
-            Color(0xFF48CAE4), // teal
-            Color(0xFFFF9F43), // orange
-          ],
-          stops: [0.0, 0.55, 1.0],
-        ),
-      ),
-      child: Stack(
-        children: [
-          // Decorative circles
-          const _DecorativeCircle(
-            top: -60,
-            left: -60,
-            size: 220,
-            color: Colors.white10,
-          ),
-          const _DecorativeCircle(
-            bottom: 80,
-            right: -80,
-            size: 280,
-            color: Colors.white10,
-          ),
-          const _DecorativeCircle(
-            top: 120,
-            right: -40,
-            size: 140,
-            color: Colors.white10,
-          ),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-class _DecorativeCircle extends StatelessWidget {
-  final double? top, bottom, left, right, size;
-  final Color color;
-
-  const _DecorativeCircle({
-    this.top,
-    this.bottom,
-    this.left,
-    this.right,
-    required this.size,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: top,
-      bottom: bottom,
-      left: left,
-      right: right,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// Logo icon
-// ─────────────────────────────────────────────
-class _SplashLogo extends StatelessWidget {
-  const _SplashLogo();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 110,
-      height: 110,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 30,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.handyman_rounded,
-          size: 56,
-          color: Color(0xFF6C63FF),
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// App title
-// ─────────────────────────────────────────────
-class _SplashTitle extends StatelessWidget {
-  const _SplashTitle();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'صنايعي',
-      style: TextStyle(
-        fontSize: 42,
-        fontWeight: FontWeight.w800,
-        color: Colors.white,
-        letterSpacing: 1.5,
-        shadows: [
-          Shadow(
-            color: Colors.black26,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// Tagline
-// ─────────────────────────────────────────────
-class _SplashTagline extends StatelessWidget {
-  const _SplashTagline();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'احجز خدمات منزلية بسهولة',
-      style: TextStyle(
-        fontSize: 16,
-        color: Colors.white70,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 0.5,
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// Animated loading dots
-// ─────────────────────────────────────────────
-class _SplashLoader extends StatefulWidget {
-  const _SplashLoader();
-
-  @override
-  State<_SplashLoader> createState() => _SplashLoaderState();
-}
-
-class _SplashLoaderState extends State<_SplashLoader>
-    with TickerProviderStateMixin {
-  late List<AnimationController> _dotControllers;
-
-  @override
-  void initState() {
-    super.initState();
-    _dotControllers = List.generate(3, (i) {
-      final ctrl = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 600),
-      );
-      Future.delayed(Duration(milliseconds: i * 200), () {
-        if (mounted) ctrl.repeat(reverse: true);
-      });
-      return ctrl;
-    });
-  }
-
-  @override
-  void dispose() {
-    for (final c in _dotControllers) {
-      c.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (i) {
-        return AnimatedBuilder(
-          animation: _dotControllers[i],
-          builder: (_, __) => Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white
-                  .withOpacity(0.4 + 0.6 * _dotControllers[i].value),
-            ),
-          ),
-        );
-      }),
     );
   }
 }
