@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -9,6 +10,7 @@ class AppTextField extends StatelessWidget {
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
   final TextInputType keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     super.key,
@@ -20,6 +22,7 @@ class AppTextField extends StatelessWidget {
     this.suffixIcon,
     this.onSuffixTap,
     this.keyboardType = TextInputType.text,
+    this.inputFormatters,
   });
 
   @override
@@ -40,6 +43,7 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           style: const TextStyle(fontSize: 14, color: Color(0xFF222222)),
           decoration: InputDecoration(
             hintText: hint,

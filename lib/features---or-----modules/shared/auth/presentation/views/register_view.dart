@@ -1,28 +1,34 @@
 import 'package:clean_arc/core/routes/navigator_push.dart';
-import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/register_view.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/login_background.dart';
-import '../widgets/login_card.dart';
-import '../widgets/login_header.dart';
+import '../widgets/register_card.dart';
+import '../widgets/register_header.dart';
 
 // ════════════════════════════════════════════════
-//  LOGIN VIEW — صنايعي
+//  REGISTER VIEW — صنايعي
 // ════════════════════════════════════════════════
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+enum UserType { customer, technician }
+
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView>
+class _RegisterViewState extends State<RegisterView>
     with SingleTickerProviderStateMixin {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _rememberMe = false;
+  final _confirmPasswordController = TextEditingController();
+
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+  UserType _selectedUserType = UserType.customer;
 
   late AnimationController _animController;
   late Animation<double> _fadeAnim;
@@ -47,8 +53,11 @@ class _LoginViewState extends State<LoginView>
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     _animController.dispose();
     super.dispose();
   }
@@ -58,10 +67,7 @@ class _LoginViewState extends State<LoginView>
     return Scaffold(
       body: Stack(
         children: [
-          // ── Gradient background ──
           const LoginBackground(),
-
-          // ── Scrollable content ──
           SafeArea(
             child: FadeTransition(
               opacity: _fadeAnim,
@@ -72,27 +78,31 @@ class _LoginViewState extends State<LoginView>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 36),
 
-                      // ── Header section ──
-                      const LoginHeader(),
+                      // ── Header ──
+                      const RegisterHeader(),
 
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 32),
 
-                      // ── Card with form ──
-                      LoginCard(
+                      // ── Form card ──
+                      RegisterCard(
+                        nameController: _nameController,
                         emailController: _emailController,
+                        phoneController: _phoneController,
                         passwordController: _passwordController,
-                        rememberMe: _rememberMe,
+                        confirmPasswordController: _confirmPasswordController,
                         obscurePassword: _obscurePassword,
-                        onRememberMeChanged: (val) =>
-                            setState(() => _rememberMe = val ?? false),
+                        obscureConfirmPassword: _obscureConfirmPassword,
+                        selectedUserType: _selectedUserType,
                         onTogglePassword: () => setState(
                             () => _obscurePassword = !_obscurePassword),
+                        onToggleConfirmPassword: () => setState(() =>
+                            _obscureConfirmPassword = !_obscureConfirmPassword),
+                        onUserTypeChanged: (type) =>
+                            setState(() => _selectedUserType = type),
+                        onCreateAccount: _handleCreateAccount,
                         onSignIn: _handleSignIn,
-                        onTechnicianSignIn: _handleTechnicianSignIn,
-                        onSignUp: _handleSignUp,
-                        onForgotPassword: _handleForgotPassword,
                       ),
 
                       const SizedBox(height: 32),
@@ -107,10 +117,8 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  // ── Actions (navigate / call your BLoC/Cubit here) ──
-  void _handleSignIn() {}
-  void _handleTechnicianSignIn() {}
-  void _handleSignUp() => RouteManager.navigateTo(const RegisterView());
-
-  void _handleForgotPassword() {}
+  void _handleCreateAccount() {}
+  void _handleSignIn() {
+    RouteManager.pop();
+  }
 }
