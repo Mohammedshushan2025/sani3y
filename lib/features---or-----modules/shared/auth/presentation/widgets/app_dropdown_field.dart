@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class AppTextField extends StatelessWidget {
-  final TextEditingController controller;
+class AppDropdownField<T> extends StatelessWidget {
   final String label;
   final String hint;
   final IconData prefixIcon;
-  final bool obscureText;
-  final IconData? suffixIcon;
-  final VoidCallback? onSuffixTap;
-  final TextInputType keyboardType;
-  final List<TextInputFormatter>? inputFormatters;
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?>? onChanged;
 
-  const AppTextField({
+  const AppDropdownField({
     super.key,
-    required this.controller,
     required this.label,
     required this.hint,
     required this.prefixIcon,
-    this.obscureText = false,
-    this.suffixIcon,
-    this.onSuffixTap,
-    this.keyboardType = TextInputType.text,
-    this.inputFormatters,
+    required this.value,
+    required this.items,
+    required this.onChanged,
   });
 
   @override
@@ -39,27 +32,19 @@ class AppTextField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          inputFormatters: inputFormatters,
+        DropdownButtonFormField<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
           style: const TextStyle(fontSize: 14, color: Color(0xFF222222)),
+          icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Color(0xFFAAAAAA)),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(color: Color(0xFFAAAAAA), fontSize: 14),
-            prefixIcon: Icon(prefixIcon, color: Color(0xFF6C63FF), size: 20),
-            suffixIcon: suffixIcon != null
-                ? GestureDetector(
-                    onTap: onSuffixTap,
-                    child: Icon(suffixIcon,
-                        color: const Color(0xFFAAAAAA), size: 20),
-                  )
-                : null,
+            prefixIcon: Icon(prefixIcon, color: const Color(0xFF6C63FF), size: 20),
             filled: true,
             fillColor: const Color(0xFFF5F5FA),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: BorderSide.none,
