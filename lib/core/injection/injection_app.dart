@@ -6,7 +6,6 @@ final getIt = GetIt.instance;
 
 Future<void> init() async {
 //Cubits - Blocs - View Models
- 
 
   /// AUTH
   // getIt.registerFactory(() => LoginCubit(getIt()));
@@ -15,28 +14,24 @@ Future<void> init() async {
   // getIt.registerFactory(() => OtpCubit(getIt()));
   // getIt.registerFactory(() => ResetPasswordCubit(getIt()));
 
-
-
 //============================================================================//
-/// Repositories
+  /// Repositories
   // getIt.registerLazySingleton<AuthRepository>(() => AuthRepository(getIt(), getIt()));
   // getIt.registerLazySingleton<HomeRepository>(() => HomeRepository(getIt(), getIt()));
- 
+
 //============================================================================//
-///UseCases
+  ///UseCases
 //   getIt.registerLazySingleton<AuthUseCase>(() => AuthUseCase(getIt()));
 
-
 //============================================================================//
-///DataSource
+  ///DataSource
   // getIt.registerLazySingleton<AuthDataSource>(() => AuthDataSource());
   // getIt.registerLazySingleton<HomeDataSource>(() => HomeDataSource());
-  
-
 
 //============================================================================//
-///Core
-  getIt.registerLazySingleton<NetworkChecker>(() => NetworkChecker(internetConnectionChecker: getIt()));
+  ///Core
+  getIt.registerLazySingleton<NetworkChecker>(
+      () => NetworkChecker(internetConnectionChecker: getIt()));
 
 //============================================================================//
 //Extra Injection

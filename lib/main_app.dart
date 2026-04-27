@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: context.locale,
       theme: themeDataLight(),
-     
+    
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       navigatorKey: navigatorKey,

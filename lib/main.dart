@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:clean_arc/generated/codegen_loader.g.dart';
 import 'package:clean_arc/main_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +34,6 @@ void main() async {
       fallbackLocale: const Locale('ar'),
       startLocale: const Locale('en'),
       path: 'assets/translations',
-      assetLoader: const CodegenLoader(),
       child: const MainApp(),
     ),
   );
