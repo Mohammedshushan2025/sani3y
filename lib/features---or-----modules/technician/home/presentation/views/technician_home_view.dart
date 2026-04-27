@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:clean_arc/core/routes/navigator_push.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ════════════════════════════════════════════════
 //  TECHNICIAN HOME VIEW — Placeholder
@@ -10,6 +14,19 @@ class TechnicianHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF6C63FF),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            onPressed: () {
+              AuthCubit.of(context).logout();
+              RouteManager.navigateAndPopAll(const LoginView());
+            },
+          ),
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

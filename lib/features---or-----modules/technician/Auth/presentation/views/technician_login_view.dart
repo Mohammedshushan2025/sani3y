@@ -5,6 +5,12 @@ import 'package:clean_arc/features---or-----modules/shared/auth/presentation/wid
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/login_header.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/widgets/technician_login_background.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/views/technician_register_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/login_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/login_state.dart';
+import 'package:clean_arc/core/injection/injection_app.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TechnicianLoginView extends StatefulWidget {
   const TechnicianLoginView({super.key});
@@ -51,61 +57,81 @@ class _TechnicianLoginViewState extends State<TechnicianLoginView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          // ── Gradient background ──
-          const TechnicianLoginBackground(),
+    return BlocProvider(
+      create: (_) => getIt<LoginCubit>(),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            // ── Gradient background ──
+            const TechnicianLoginBackground(),
 
-          // ── Scrollable content ──
-          SafeArea(
-            child: FadeTransition(
-              opacity: _fadeAnim,
-              child: SlideTransition(
-                position: _slideAnim,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 40),
+            // ── Scrollable content ──
+            SafeArea(
+              child: FadeTransition(
+                opacity: _fadeAnim,
+                child: SlideTransition(
+                  position: _slideAnim,
+                  child: BlocListener<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      if (state is LoginSuccess) {
+                        AuthCubit.of(context).loginSuccess(state.auth);
+                        RouteManager.navigateAndPopAll(const TechnicianHomeView());
+                      } else if (state is LoginError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message), backgroundColor: Colors.redAccent),
+                        );
+                      }
+                    },
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: 40),
 
-                      // ── Header section ──
-                      const LoginHeader(),
+                          // ── Header section ──
+                          const LoginHeader(),
 
-                      const SizedBox(height: 40),
+                          const SizedBox(height: 40),
 
-                      // ── Card with form ──
-                      LoginCard(
-                        emailController: _emailController,
-                        passwordController: _passwordController,
-                        rememberMe: _rememberMe,
-                        obscurePassword: _obscurePassword,
-                        onRememberMeChanged: (val) =>
-                            setState(() => _rememberMe = val ?? false),
-                        onTogglePassword: () => setState(
-                            () => _obscurePassword = !_obscurePassword),
-                        onSignIn: _handleSignIn,
-                        onTechnicianSignIn: _handleUserSignIn,
-                        onSignUp: _handleSignUp,
-                        onForgotPassword: _handleForgotPassword,
-                        technicianToggleLabel: 'دخول كمستخدم',
+                          // ── Card with form ──
+                          Builder(
+                            builder: (context) => LoginCard(
+                              emailController: _emailController,
+                              passwordController: _passwordController,
+                              rememberMe: _rememberMe,
+                              obscurePassword: _obscurePassword,
+                              onRememberMeChanged: (val) =>
+                                  setState(() => _rememberMe = val ?? false),
+                              onTogglePassword: () => setState(
+                                  () => _obscurePassword = !_obscurePassword),
+                              onSignIn: () => _handleSignIn(context),
+                              onTechnicianSignIn: _handleUserSignIn,
+                              onSignUp: _handleSignUp,
+                              onForgotPassword: _handleForgotPassword,
+                              technicianToggleLabel: 'دخول كمستخدم',
+                            ),
+                          ),
+
+                          const SizedBox(height: 32),
+                        ],
                       ),
-
-                      const SizedBox(height: 32),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  void _handleSignIn() {
-    // Implement technician login logic
+  void _handleSignIn(BuildContext context) {
+    LoginCubit.of(context).login(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+    );
   }
 
   void _handleUserSignIn() {

@@ -1,3 +1,10 @@
+import 'package:clean_arc/features---or-----modules/shared/auth/data/data_source/auth_local_data_source.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/data/data_source/auth_remote_data_source.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/data/repository/auth_repo_impl.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/domain/repo/auth_repo.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/login_cubit.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../network/dio_helper.dart';
@@ -16,6 +23,10 @@ Future<void> init() async {
 
 //Cubits - Blocs - View Models
 
+  /// AUTH (Shared)
+  getIt.registerLazySingleton(() => AuthCubit(getIt()));
+  getIt.registerFactory(() => LoginCubit(getIt()));
+
   /// TECHNICIAN AUTH
   getIt.registerFactory(() => TechnicianRegisterCubit(getIt()));
 
@@ -28,6 +39,9 @@ Future<void> init() async {
 
 //============================================================================//
   /// Repositories
+  getIt.registerLazySingleton<AuthRepo>(
+    () => AuthRepoImpl(remoteDataSource: getIt(), localDataSource: getIt()),
+  );
   getIt.registerLazySingleton<TechnicianAuthRepo>(
     () => TechnicianAuthRepoImpl(remoteDataSource: getIt()),
   );
@@ -40,6 +54,12 @@ Future<void> init() async {
 
 //============================================================================//
   ///DataSource
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(secureStorage: getIt()),
+  );
   getIt.registerLazySingleton<TechnicianAuthRemoteDataSource>(
     () => TechnicianAuthRemoteDataSourceImpl(),
   );
@@ -53,7 +73,6 @@ Future<void> init() async {
 
 //============================================================================//
 //Extra Injection
-  // final sharedPreferences = await SharedPreferences.getInstance();
-  // getIt.registerLazySingleton(() => sharedPreferences);
+  getIt.registerLazySingleton(() => const FlutterSecureStorage());
   getIt.registerLazySingleton(() => InternetConnectionCheckerConstants());
 }

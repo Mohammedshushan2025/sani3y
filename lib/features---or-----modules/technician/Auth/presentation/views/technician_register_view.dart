@@ -6,6 +6,7 @@ import 'package:clean_arc/core/validation/validations.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_state.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import '../widgets/register_background.dart';
 import '../widgets/register_form_card.dart';
 import '../widgets/register_header.dart';
@@ -134,6 +135,9 @@ class _TechnicianRegisterViewState extends State<TechnicianRegisterView>
                       TechnicianRegisterState>(
                     listener: (context, state) {
                       if (state is RegisterSuccessState) {
+                        // Establish global auth session
+                        AuthCubit.of(context).loginSuccess(state.auth);
+
                         // Show brief success toast then navigate
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

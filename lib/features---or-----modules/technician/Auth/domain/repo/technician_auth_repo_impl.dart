@@ -7,6 +7,8 @@ import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entit
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/register_technician_entity.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/repo/technician_auth_repo.dart';
 
+import '../../../../shared/auth/domain/entities/auth_entity.dart';
+
 // ════════════════════════════════════════════════
 //  TECHNICIAN AUTH REPO — Implementation
 // ════════════════════════════════════════════════
@@ -31,12 +33,12 @@ class TechnicianAuthRepoImpl implements TechnicianAuthRepo {
   }
 
   @override
-  Future<Either<Failure, String>> registerTechnician(
+  Future<Either<Failure, AuthEntity>> registerTechnician(
       RegisterTechnicianEntity data) async {
     try {
       final model = RegisterTechnicianModel.fromEntity(data);
-      final message = await remoteDataSource.registerTechnician(model);
-      return Right(message);
+      final authModel = await remoteDataSource.registerTechnician(model);
+      return Right(authModel);
     } on ServerException catch (e) {
       return Left(
         ServerFailure(message: e.errorModel.getFirstError() ?? 'حدث خطأ في الخادم'),

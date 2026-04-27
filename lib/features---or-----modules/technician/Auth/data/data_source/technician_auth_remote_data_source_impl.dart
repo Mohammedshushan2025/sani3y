@@ -5,11 +5,10 @@ import 'package:clean_arc/core/network/api_response_wrapper.dart';
 import 'package:clean_arc/core/network/dio_helper.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/data/models/category_model.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/data/models/register_technician_model.dart';
+import '../../../../../core/errors/error_model.dart';
+import '../../../../shared/auth/data/models/auth_model.dart';
 import 'technician_auth_remote_data_source.dart';
 
-// ════════════════════════════════════════════════
-//  TECHNICIAN AUTH REMOTE DATA SOURCE — Impl
-// ════════════════════════════════════════════════
 
 class TechnicianAuthRemoteDataSourceImpl
     implements TechnicianAuthRemoteDataSource {
@@ -36,7 +35,7 @@ class TechnicianAuthRemoteDataSourceImpl
 
   // ── POST /register/ ───────────────────────────
   @override
-  Future<String> registerTechnician(RegisterTechnicianModel model) async {
+  Future<AuthModel> registerTechnician(RegisterTechnicianModel model) async {
     try {
       final formData = await model.toFormData();
 
@@ -46,12 +45,18 @@ class TechnicianAuthRemoteDataSourceImpl
         isFormData: true,
       );
 
-      final apiResponse = ApiResponse<dynamic>.fromJson(
+      final apiResponse = ApiResponse<AuthModel>.fromJson(
         response.data as Map<String, dynamic>,
-        null,
+        (data) => AuthModel.fromJson(data as Map<String, dynamic>),
       );
 
-      return apiResponse.message;
+      if (apiResponse.data == null) {
+        throw ServerException(
+          errorModel: ErrorModel(message: apiResponse.message, status: apiResponse.success.toString()),
+        );
+      }
+
+      return apiResponse.data!;
     } on DioException catch (e) {
       handelDioException(e);
       rethrow;

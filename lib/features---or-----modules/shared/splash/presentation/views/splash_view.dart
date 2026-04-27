@@ -1,6 +1,10 @@
 import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_state.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/splash_background.dart';
 import '../widgets/splash_loader.dart';
@@ -57,12 +61,14 @@ class _SplashViewState extends State<SplashView>
     );
 
     _controller.forward();
+  }
 
-    Future.delayed(const Duration(seconds: 5), () {
-      if (mounted) {
-        RouteManager.navigateTo(const LoginView());
-      }
-    });
+  void _onAnimationComplete(AuthState authState) {
+    if (authState is AuthAuthenticated) {
+      RouteManager.navigateAndPopAll(const TechnicianHomeView());
+    } else {
+      RouteManager.navigateAndPopAll(const LoginView());
+    }
   }
 
   @override
@@ -73,57 +79,69 @@ class _SplashViewState extends State<SplashView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SplashBackground(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
-              // ── Logo ──
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) => Transform.scale(
-                  scale: _scaleAnim.value,
-                  child: child,
-                ),
-                child: const SplashLogo(),
-              ),
-              const SizedBox(height: 28),
-              // ── App name ──
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) => Opacity(
-                  opacity: _fadeAnim.value,
-                  child: Transform.translate(
-                    offset: Offset(0, _slideAnim.value),
-                    child: child,
-                  ),
-                ),
-                child: const SplashTitle(),
-              ),
-              const SizedBox(height: 12),
-              // ── Tagline ──
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) => Opacity(
-                  opacity: _fadeAnim.value,
-                  child: child,
-                ),
-                child: const SplashTagline(),
-              ),
-              const Spacer(flex: 2),
-              // ── Loading indicator ──
-              AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) => Opacity(
-                  opacity: _fadeAnim.value,
-                  child: child,
-                ),
-                child: const SplashLoader(),
-              ),
-              const SizedBox(height: 48),
-            ],
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {},
+      child: Scaffold(
+        body: SplashBackground(
+          child: SafeArea(
+            child: FutureBuilder(
+                future: Future.delayed(const Duration(seconds: 4)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _onAnimationComplete(context.read<AuthCubit>().state);
+                    });
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(flex: 2),
+                      // ── Logo ──
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) => Transform.scale(
+                          scale: _scaleAnim.value,
+                          child: child,
+                        ),
+                        child: const SplashLogo(),
+                      ),
+                      const SizedBox(height: 28),
+                      // ── App name ──
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) => Opacity(
+                          opacity: _fadeAnim.value,
+                          child: Transform.translate(
+                            offset: Offset(0, _slideAnim.value),
+                            child: child,
+                          ),
+                        ),
+                        child: const SplashTitle(),
+                      ),
+                      const SizedBox(height: 12),
+                      // ── Tagline ──
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) => Opacity(
+                          opacity: _fadeAnim.value,
+                          child: child,
+                        ),
+                        child: const SplashTagline(),
+                      ),
+                      const Spacer(flex: 2),
+                      // ── Loading indicator ──
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) => Opacity(
+                          opacity: _fadeAnim.value,
+                          child: child,
+                        ),
+                        child: const SplashLoader(),
+                      ),
+                      const SizedBox(height: 48),
+                    ],
+                  );
+                }),
           ),
         ),
       ),

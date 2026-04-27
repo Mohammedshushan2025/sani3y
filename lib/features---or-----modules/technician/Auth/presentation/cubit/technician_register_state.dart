@@ -1,8 +1,5 @@
+import 'package:clean_arc/features---or-----modules/shared/auth/domain/entities/auth_entity.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/category_entity.dart';
-
-// ════════════════════════════════════════════════
-//  TECHNICIAN REGISTER STATES
-// ════════════════════════════════════════════════
 
 abstract class TechnicianRegisterState {}
 
@@ -33,7 +30,8 @@ class RegisterLoadingState extends TechnicianRegisterState {}
 
 class RegisterSuccessState extends TechnicianRegisterState {
   final String message;
-  RegisterSuccessState({required this.message});
+  final AuthEntity auth;
+  RegisterSuccessState({required this.message, required this.auth});
 }
 
 class RegisterErrorState extends TechnicianRegisterState {

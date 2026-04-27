@@ -5,9 +5,7 @@ import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entit
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/repo/technician_auth_repo.dart';
 import 'technician_register_state.dart';
 
-// ════════════════════════════════════════════════
-//  TECHNICIAN REGISTER CUBIT
-// ════════════════════════════════════════════════
+
 
 class TechnicianRegisterCubit extends Cubit<TechnicianRegisterState> {
   final TechnicianAuthRepo _repo;
@@ -75,7 +73,7 @@ class TechnicianRegisterCubit extends Cubit<TechnicianRegisterState> {
     final result = await _repo.registerTechnician(entity);
     result.fold(
       (failure) => emit(RegisterErrorState(message: failure.message)),
-      (message) => emit(RegisterSuccessState(message: message)),
+      (auth) => emit(RegisterSuccessState(message: 'تم إنشاء الحساب بنجاح', auth: auth)),
     );
   }
 }
