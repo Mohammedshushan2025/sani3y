@@ -1,4 +1,5 @@
 import 'package:clean_arc/core/routes/navigator_push.dart';
+import 'package:clean_arc/features---or-----modules/client/nav_bar/presentation/views/main_nav_bar.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/register_view.dart';
 import 'package:flutter/material.dart';
 
@@ -110,7 +111,10 @@ class _LoginViewState extends State<LoginView>
   }
 
   // ── Actions (navigate / call your BLoC/Cubit here) ──
-  void _handleSignIn() {}
+  void _handleSignIn() {
+    RouteManager.navigateTo(const MainNavView());
+  }
+
   void _handleTechnicianSignIn() {
     RouteManager.navigateReplacement(const TechnicianLoginView());
   }
