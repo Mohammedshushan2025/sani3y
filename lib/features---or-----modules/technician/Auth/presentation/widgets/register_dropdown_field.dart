@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/category_entity.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_state.dart';
@@ -35,9 +36,9 @@ class RegisterDropdownField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Label ──
-            const Text(
-              'التخصص',
-              style: TextStyle(
+            Text(
+              'category'.tr(),
+              style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF444444),
@@ -90,13 +91,14 @@ class RegisterDropdownField extends StatelessWidget {
           const SizedBox(height: 6),
           GestureDetector(
             onTap: cubit.fetchCategories,
-            child: const Text(
-              'إعادة المحاولة',
-              style: TextStyle(
+            child: Text(
+              'retry'.tr(),
+              style: const TextStyle(
                 color: Color(0xFF6C63FF),
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 decoration: TextDecoration.underline,
+                decorationColor: Color(0xFF6C63FF),
               ),
             ),
           ),
@@ -108,9 +110,9 @@ class RegisterDropdownField extends StatelessWidget {
     return DropdownButtonFormField<int>(
       value: selectedCategoryId,
       onChanged: onChanged,
-      hint: const Text(
-        'اختر التخصص',
-        style: TextStyle(color: Color(0xFFAAAAAA), fontSize: 14),
+      hint: Text(
+        'select_category'.tr(),
+        style: const TextStyle(color: Color(0xFFAAAAAA), fontSize: 14),
       ),
       icon: const Icon(Icons.keyboard_arrow_down_rounded,
           color: Color(0xFF6C63FF)),
@@ -140,7 +142,7 @@ class RegisterDropdownField extends StatelessWidget {
             (cat) => DropdownMenuItem<int>(
               value: cat.id,
               child: Text(
-                cat.nameAr,
+                context.locale.languageCode == 'ar' ? cat.nameAr : cat.nameEn,
                 style: const TextStyle(
                     fontSize: 14, color: Color(0xFF222222)),
               ),

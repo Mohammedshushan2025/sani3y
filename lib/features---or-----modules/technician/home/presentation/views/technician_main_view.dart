@@ -1,5 +1,7 @@
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/settings/presentation/views/technician_settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class TechnicianMainView extends StatefulWidget {
   const TechnicianMainView({super.key});
@@ -13,8 +15,8 @@ class _TechnicianMainViewState extends State<TechnicianMainView> {
 
   final List<Widget> _pages = [
     const TechnicianHomeView(),
-    const Scaffold(body: Center(child: Text('Orders'))),
-    const Scaffold(body: Center(child: Text('Settings'))),
+    Scaffold(body: Center(child: Text('orders'.tr()))),
+    const TechnicianSettingsView(),
   ];
 
   @override
@@ -50,21 +52,21 @@ class _TechnicianMainViewState extends State<TechnicianMainView> {
             showSelectedLabels: true,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home),
-                label: 'Home',
+                icon: const Icon(Icons.home_outlined),
+                activeIcon: const Icon(Icons.home),
+                label: 'home'.tr(),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag_outlined),
-                activeIcon: Icon(Icons.shopping_bag),
-                label: 'Orders',
+                icon: const Icon(Icons.shopping_bag_outlined),
+                activeIcon: const Icon(Icons.shopping_bag),
+                label: 'orders'.tr(),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
-                activeIcon: Icon(Icons.settings),
-                label: 'Settings',
+                icon: const Icon(Icons.settings_outlined),
+                activeIcon: const Icon(Icons.settings),
+                label: 'settings'.tr(),
               ),
             ],
           ),

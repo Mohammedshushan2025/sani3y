@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class RememberForgotRow extends StatelessWidget {
   final bool rememberMe;
@@ -32,18 +33,18 @@ class RememberForgotRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Text(
-              'تذكرني',
-              style: TextStyle(fontSize: 13, color: Color(0xFF666666)),
+            Text(
+              'remember_me'.tr(),
+              style: const TextStyle(fontSize: 13, color: Color(0xFF666666)),
             ),
           ],
         ),
         // Forgot password
         GestureDetector(
           onTap: onForgotPassword,
-          child: const Text(
-            'نسيت كلمة المرور؟',
-            style: TextStyle(
+          child: Text(
+            'forgot_password'.tr(),
+            style: const TextStyle(
               fontSize: 13,
               color: Color(0xFF48CAE4),
               fontWeight: FontWeight.w600,

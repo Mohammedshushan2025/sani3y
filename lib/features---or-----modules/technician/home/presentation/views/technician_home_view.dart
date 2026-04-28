@@ -1,4 +1,5 @@
 import 'package:clean_arc/core/injection/injection_app.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_state.dart';
@@ -81,7 +82,7 @@ class TechnicianHomeView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${DateFormat('MMMM d').format(state.selectedDate)} Schedule',
+                      '${DateFormat('MMMM d', context.locale.toString()).format(state.selectedDate)} ${'schedule'.tr()}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class TechnicianHomeView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${filteredBookings.length} orders',
+                      '${filteredBookings.length} ${'orders'.tr()}',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
@@ -99,7 +100,7 @@ class TechnicianHomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ...filteredBookings.map((booking) => OrderItemCard(
-                      title: booking.serviceDetails?.nameEn ?? 'Service',
+                      title: booking.serviceDetails?.nameEn ?? 'service'.tr(),
                       customerName: 'Customer #${booking.customer}', // Placeholder
                       time: booking.bookingTime ?? '9:00 AM',
                       price: '\$${booking.serviceDetails?.price ?? '0'}',
@@ -138,7 +139,7 @@ class TechnicianHomeView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Welcome back,',
+                    'welcome_back'.tr(),
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -146,8 +147,8 @@ class TechnicianHomeView extends StatelessWidget {
                   ),
                   Text(
                     (authState is AuthAuthenticated) 
-                      ? (authState.auth.fullName ?? 'Technician')
-                      : 'Technician',
+                      ? (authState.auth.fullName ?? 'technician'.tr())
+                      : 'technician'.tr(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
@@ -172,20 +173,20 @@ class TechnicianHomeView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
-          const Row(
+          Row(
             children: [
               SummaryCard(
                 icon: Icons.check_circle_outline,
-                title: 'Completed',
+                title: 'completed'.tr(),
                 value: '127',
-                subtitle: 'Total orders',
+                subtitle: 'total_orders'.tr(),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               SummaryCard(
                 icon: Icons.monetization_on_outlined,
-                title: 'Earnings',
+                title: 'earnings'.tr(),
                 value: '\$8,450',
-                subtitle: '+\$1240 this month',
+                subtitle: '+\$1240 ${'this_month'.tr()}',
               ),
             ],
           ),

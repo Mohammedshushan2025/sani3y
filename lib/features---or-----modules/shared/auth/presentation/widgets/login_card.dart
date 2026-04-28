@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'app_text_field.dart';
 import 'remember_forgot_row.dart';
@@ -33,7 +34,7 @@ class LoginCard extends StatelessWidget {
     required this.onSignUp,
     required this.onForgotPassword,
     this.technicianToggleLabel = 'دخول كصنايعي',
-  });
+  }) : super(); // Default value will be overwritten by tr() in parent if needed
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class LoginCard extends StatelessWidget {
           // ── Email field ──
           AppTextField(
             controller: emailController,
-            label: 'البريد الإلكتروني',
+            label: 'email'.tr(),
             hint: 'your@email.com',
             prefixIcon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
@@ -67,7 +68,7 @@ class LoginCard extends StatelessWidget {
           // ── Password field ──
           AppTextField(
             controller: passwordController,
-            label: 'كلمة المرور',
+            label: 'password'.tr(),
             hint: '••••••••',
             prefixIcon: Icons.lock_outline_rounded,
             obscureText: obscurePassword,
@@ -90,7 +91,7 @@ class LoginCard extends StatelessWidget {
 
           // ── Sign In button ──
           GradientButton(
-            label: 'تسجيل الدخول',
+            label: 'sign_in'.tr(),
             onTap: onSignIn,
           ),
 

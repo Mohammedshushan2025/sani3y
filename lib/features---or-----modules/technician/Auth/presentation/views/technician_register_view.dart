@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/core/injection/injection_app.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/core/validation/validations.dart';
@@ -205,16 +206,16 @@ class _TechnicianRegisterViewState extends State<TechnicianRegisterView>
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                  'لديك حساب بالفعل؟ ',
-                                  style: TextStyle(
+                                Text(
+                                  'already_have_account'.tr(),
+                                  style: const TextStyle(
                                       color: Colors.white70, fontSize: 14),
                                 ),
                                 GestureDetector(
                                   onTap: () => RouteManager.pop(),
-                                  child: const Text(
-                                    'تسجيل الدخول',
-                                    style: TextStyle(
+                                  child: Text(
+                                    'sign_in'.tr(),
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,

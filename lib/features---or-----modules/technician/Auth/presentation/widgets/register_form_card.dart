@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/app_text_field.dart';
 import 'register_dropdown_field.dart';
 import 'register_image_picker.dart';
@@ -67,7 +68,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Full name ──
           AppTextField(
             controller: fullNameController,
-            label: 'الاسم الكامل',
+            label: 'full_name'.tr(),
             hint: 'محمد أحمد',
             prefixIcon: Icons.person_outline_rounded,
           ),
@@ -78,7 +79,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Email ──
           AppTextField(
             controller: emailController,
-            label: 'البريد الإلكتروني',
+            label: 'email'.tr(),
             hint: 'your@email.com',
             prefixIcon: Icons.email_outlined,
             keyboardType: TextInputType.emailAddress,
@@ -90,7 +91,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Password ──
           AppTextField(
             controller: passwordController,
-            label: 'كلمة المرور',
+            label: 'password'.tr(),
             hint: '••••••••',
             prefixIcon: Icons.lock_outline_rounded,
             obscureText: obscurePassword,
@@ -106,7 +107,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Phone ──
           AppTextField(
             controller: phoneController,
-            label: 'رقم الهاتف',
+            label: 'phone'.tr(),
             hint: '01XXXXXXXXX',
             prefixIcon: Icons.phone_outlined,
             keyboardType: TextInputType.phone,
@@ -118,7 +119,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Governorate ──
           AppTextField(
             controller: governorateController,
-            label: 'المحافظة',
+            label: 'governorate'.tr(),
             hint: 'القاهرة',
             prefixIcon: Icons.location_city_outlined,
           ),
@@ -129,7 +130,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── City ──
           AppTextField(
             controller: cityController,
-            label: 'المدينة / المنطقة',
+            label: 'city'.tr(),
             hint: 'مدينة نصر',
             prefixIcon: Icons.map_outlined,
           ),
@@ -140,7 +141,7 @@ class RegisterFormCard extends StatelessWidget {
           // ── Age ──
           AppTextField(
             controller: ageController,
-            label: 'العمر',
+            label: 'age'.tr(),
             hint: '25',
             prefixIcon: Icons.cake_outlined,
             keyboardType: TextInputType.number,
@@ -160,7 +161,7 @@ class RegisterFormCard extends StatelessWidget {
 
           // ── Submit button ──
           RegisterStepButton(
-            label: 'إنشاء الحساب',
+            label: 'create_account'.tr(),
             onTap: onSubmit,
           ),
         ],

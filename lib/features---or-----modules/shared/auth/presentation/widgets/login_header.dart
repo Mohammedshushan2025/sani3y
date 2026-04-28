@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -29,18 +30,18 @@ class LoginHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        const Text(
-          'أهلاً بعودتك!',
-          style: TextStyle(
+        Text(
+          'login_title'.tr(),
+          style: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w800,
             color: Colors.white,
           ),
         ),
         const SizedBox(height: 6),
-        const Text(
-          'سجّل دخولك لحجز خدمات منزلية',
-          style: TextStyle(
+        Text(
+          'login_subtitle'.tr(),
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.white70,
           ),

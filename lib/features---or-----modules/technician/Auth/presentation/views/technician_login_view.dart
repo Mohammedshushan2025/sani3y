@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/login_card.dart';
@@ -109,13 +110,40 @@ class _TechnicianLoginViewState extends State<TechnicianLoginView>
                               onTechnicianSignIn: _handleUserSignIn,
                               onSignUp: _handleSignUp,
                               onForgotPassword: _handleForgotPassword,
-                              technicianToggleLabel: 'دخول كمستخدم',
+                              technicianToggleLabel: 'login_as_user'.tr(),
                             ),
                           ),
 
                           const SizedBox(height: 32),
                         ],
                       ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // ── Language Toggle ──
+            Positioned(
+              top: 50,
+              right: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    if (context.locale.languageCode == 'ar') {
+                      context.setLocale(const Locale('en'));
+                    } else {
+                      context.setLocale(const Locale('ar'));
+                    }
+                  },
+                  child: Text(
+                    context.locale.languageCode == 'ar' ? 'EN' : 'AR',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

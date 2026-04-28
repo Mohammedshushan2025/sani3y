@@ -4,11 +4,13 @@
 //  strings (no localization dependency needed).
 // ════════════════════════════════════════════════
 
+import 'package:easy_localization/easy_localization.dart';
+
 abstract class AppValidations {
   // ── Required field ─────────────────────────────
-  static String? validateRequired(String? value, {String fieldName = 'الحقل'}) {
+  static String? validateRequired(String? value, {String? fieldName}) {
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName مطلوب';
+      return fieldName != null ? '$fieldName ${'validation_required'.tr()}' : 'validation_required'.tr();
     }
     return null;
   }
@@ -16,10 +18,10 @@ abstract class AppValidations {
   // ── Full name ──────────────────────────────────
   static String? validateFullName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'الاسم الكامل مطلوب';
+      return 'validation_fullname_required'.tr();
     }
     if (value.trim().length < 3) {
-      return 'الاسم يجب أن يكون 3 أحرف على الأقل';
+      return 'validation_fullname_short'.tr();
     }
     return null;
   }
@@ -27,11 +29,11 @@ abstract class AppValidations {
   // ── Email ──────────────────────────────────────
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'البريد الإلكتروني مطلوب';
+      return 'validation_email_required'.tr();
     }
     final emailRegex = RegExp(r'^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$');
     if (!emailRegex.hasMatch(value.trim())) {
-      return 'البريد الإلكتروني غير صحيح';
+      return 'validation_email_invalid'.tr();
     }
     return null;
   }
@@ -39,10 +41,10 @@ abstract class AppValidations {
   // ── Password ───────────────────────────────────
   static String? validatePassword(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'كلمة المرور مطلوبة';
+      return 'validation_password_required'.tr();
     }
     if (value.length < 6) {
-      return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+      return 'validation_password_short'.tr();
     }
     return null;
   }
@@ -50,10 +52,10 @@ abstract class AppValidations {
   // ── Confirm password ───────────────────────────
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.trim().isEmpty) {
-      return 'تأكيد كلمة المرور مطلوب';
+      return 'validation_password_required'.tr(); // Or a specific key
     }
     if (value != password) {
-      return 'كلمة المرور غير متطابقة';
+      return 'password_mismatch'.tr();
     }
     return null;
   }
@@ -61,10 +63,10 @@ abstract class AppValidations {
   // ── Phone ──────────────────────────────────────
   static String? validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'رقم الهاتف مطلوب';
+      return 'validation_phone_required'.tr();
     }
     if (!RegExp(r'^[0-9]{10,15}$').hasMatch(value.trim())) {
-      return 'رقم الهاتف يجب أن يكون بين 10 و 15 رقماً';
+      return 'validation_phone_invalid'.tr();
     }
     return null;
   }
@@ -72,14 +74,14 @@ abstract class AppValidations {
   // ── Age ────────────────────────────────────────
   static String? validateAge(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'العمر مطلوب';
+      return 'validation_age_required'.tr();
     }
     final age = int.tryParse(value.trim());
     if (age == null) {
-      return 'يرجى إدخال رقم صحيح';
+      return 'validation_age_invalid'.tr();
     }
     if (age < 18 || age > 80) {
-      return 'العمر يجب أن يكون بين 18 و 80';
+      return 'validation_age_range'.tr();
     }
     return null;
   }
@@ -87,10 +89,10 @@ abstract class AppValidations {
   // ── OTP ────────────────────────────────────────
   static String? validateOtp(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'رمز التحقق مطلوب';
+      return 'otp_required'.tr();
     }
     if (value.trim().length < 4) {
-      return 'رمز التحقق يجب أن يكون 4 أرقام على الأقل';
+      return 'otp_short'.tr();
     }
     return null;
   }
@@ -98,22 +100,10 @@ abstract class AppValidations {
   // ── National ID ────────────────────────────────
   static String? validateNationalId(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'الرقم القومي مطلوب';
+      return 'national_id_required'.tr();
     }
     if (!RegExp(r'^[1|2]{1}[0-9]{9}$').hasMatch(value.trim())) {
-      return 'الرقم القومي غير صحيح';
-    }
-    return null;
-  }
-
-  // ── Generic min-length ─────────────────────────
-  static String? validateMinLength(String? value,
-      {required int min, String fieldName = 'الحقل'}) {
-    if (value == null || value.trim().isEmpty) {
-      return '$fieldName مطلوب';
-    }
-    if (value.trim().length < min) {
-      return '$fieldName يجب أن يكون $min أحرف على الأقل';
+      return 'national_id_invalid'.tr();
     }
     return null;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class TechnicianCalendar extends StatefulWidget {
   final DateTime selectedDate;
@@ -62,7 +63,7 @@ class _TechnicianCalendarState extends State<TechnicianCalendar> {
             const Icon(Icons.calendar_today, color: Colors.orange, size: 20),
             const SizedBox(width: 10),
             Text(
-              DateFormat('MMMM yyyy').format(_currentMonth),
+              DateFormat('MMMM yyyy', context.locale.toString()).format(_currentMonth),
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -96,7 +97,9 @@ class _TechnicianCalendarState extends State<TechnicianCalendar> {
   }
 
   Widget _buildDaysOfWeek() {
-    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    final days = context.locale.languageCode == 'ar' 
+      ? ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
+      : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: days

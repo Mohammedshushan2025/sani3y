@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // ════════════════════════════════════════════════
 //  REGISTER HEADER — mirrors LoginHeader style
@@ -34,9 +35,9 @@ class RegisterHeader extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         // ── Title ──
-        const Text(
-          'انضم كصنايعي!',
-          style: TextStyle(
+        Text(
+          'register_title'.tr(),
+          style: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w800,
             color: Colors.white,
@@ -44,9 +45,9 @@ class RegisterHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         // ── Subtitle ──
-        const Text(
-          'أنشئ حسابك وابدأ استقبال الطلبات',
-          style: TextStyle(
+        Text(
+          'register_subtitle'.tr(),
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.white70,
           ),

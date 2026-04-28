@@ -3,6 +3,7 @@ import 'package:clean_arc/features---or-----modules/shared/auth/presentation/vie
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_state.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +66,7 @@ class _SplashViewState extends State<SplashView>
 
   void _onAnimationComplete(AuthState authState) {
     if (authState is AuthAuthenticated) {
-      RouteManager.navigateAndPopAll(const TechnicianHomeView());
+      RouteManager.navigateAndPopAll(const TechnicianMainView());
     } else {
       RouteManager.navigateAndPopAll(const LoginView());
     }

@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 enum BookingStatus {
   pending,
   accepted,
@@ -7,13 +9,13 @@ enum BookingStatus {
   String get displayName {
     switch (this) {
       case BookingStatus.pending:
-        return 'Pending';
+        return 'pending'.tr();
       case BookingStatus.accepted:
-        return 'Accepted';
+        return 'accepted'.tr();
       case BookingStatus.rejected:
-        return 'Rejected';
+        return 'rejected'.tr();
       case BookingStatus.completed:
-        return 'Completed';
+        return 'completed'.tr();
     }
   }
 }
