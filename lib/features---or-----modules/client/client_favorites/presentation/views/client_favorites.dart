@@ -238,7 +238,7 @@ class _FavoriteServiceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4))
         ],
@@ -250,7 +250,7 @@ class _FavoriteServiceCard extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: service.iconColor.withOpacity(0.12),
+              color: service.iconColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(service.icon, color: service.iconColor, size: 24),
@@ -358,7 +358,7 @@ class _FavoriteTechnicianCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4))
         ],
@@ -367,7 +367,7 @@ class _FavoriteTechnicianCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24,
-            backgroundColor: technician.avatarColor.withOpacity(0.2),
+            backgroundColor: technician.avatarColor.withValues(alpha: 0.2),
             child: Icon(Icons.person_rounded,
                 color: technician.avatarColor, size: 26),
           ),
@@ -429,7 +429,7 @@ class _EmptyFavorites extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.favorite_border_rounded,
-              size: 64, color: AppColors.textLight.withOpacity(0.5)),
+              size: 64, color: AppColors.textLight.withValues(alpha: 0.5)),
           const SizedBox(height: 16),
           const Text('لا يوجد عناصر في المفضلة',
               style: TextStyle(

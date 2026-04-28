@@ -173,7 +173,7 @@ class _EmptyOrders extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.receipt_long_outlined,
-              size: 64, color: AppColors.textLight.withOpacity(0.5)),
+              size: 64, color: AppColors.textLight.withValues(alpha: 0.5)),
           const SizedBox(height: 16),
           const Text('لا توجد طلبات هنا',
               style: TextStyle(
@@ -224,7 +224,7 @@ class _OrderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 12,
               offset: const Offset(0, 4))
         ],
@@ -239,7 +239,7 @@ class _OrderCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: order.iconColor.withOpacity(0.12),
+                  color: order.iconColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(order.icon, color: order.iconColor, size: 24),

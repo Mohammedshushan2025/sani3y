@@ -97,10 +97,10 @@ class _HomeHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text('أهلاً بعودتك،',
                     style: TextStyle(color: Colors.white70, fontSize: 14)),
                 SizedBox(height: 4),
@@ -126,8 +126,8 @@ class _LocationChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         Icon(Icons.location_on_outlined, color: Colors.white70, size: 14),
         SizedBox(width: 4),
         Text(
@@ -192,8 +192,8 @@ class _SearchBar extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: const [
+      child: const Row(
+        children: [
           Icon(Icons.search, color: AppColors.textLight, size: 20),
           SizedBox(width: 10),
           Text('ابحث عن خدمة...',
@@ -226,7 +226,7 @@ class _SectionTitle extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppColors.textDark)),
           if (showSeeAll)
-            Text('عرض الكل',
+            const Text('عرض الكل',
                 style: TextStyle(
                     fontSize: 12,
                     color: AppColors.violet,
@@ -319,8 +319,8 @@ class _OfferCard extends StatelessWidget {
           Text(subtitle,
               style: const TextStyle(color: Colors.white70, fontSize: 12)),
           const Spacer(),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Text('عرض التفاصيل',
                   style: TextStyle(
                       color: Colors.white,

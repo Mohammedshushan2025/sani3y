@@ -145,7 +145,7 @@ class _ProfileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: AppColors.violet.withOpacity(0.3),
+            color: AppColors.violet.withValues(alpha: 0.3),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -154,11 +154,10 @@ class _ProfileCard extends StatelessWidget {
       child: Row(
         children: [
           // Avatar
-          CircleAvatar(
+          const CircleAvatar(
             radius: 28,
             backgroundColor: Colors.white24,
-            child:
-                const Icon(Icons.person_rounded, color: Colors.white, size: 32),
+            child: Icon(Icons.person_rounded, color: Colors.white, size: 32),
           ),
           const SizedBox(width: 14),
           // User info
@@ -231,7 +230,7 @@ class _SettingsSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 4))
             ],
@@ -288,7 +287,7 @@ class _SettingsItemTile extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppColors.violet.withOpacity(0.1),
+                color: AppColors.violet.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(item.icon, color: AppColors.violet, size: 18),
@@ -338,7 +337,7 @@ class _LogoutButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4))
           ],
