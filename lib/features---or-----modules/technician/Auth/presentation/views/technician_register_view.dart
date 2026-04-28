@@ -5,7 +5,7 @@ import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/core/validation/validations.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_state.dart';
-import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_main_view.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import '../widgets/register_background.dart';
 import '../widgets/register_form_card.dart';
@@ -151,7 +151,7 @@ class _TechnicianRegisterViewState extends State<TechnicianRegisterView>
                         );
                         Future.delayed(const Duration(milliseconds: 600), () {
                           RouteManager.navigateAndPopAll(
-                              const TechnicianHomeView());
+                              const TechnicianMainView());
                         });
                       } else if (state is RegisterErrorState) {
                         ScaffoldMessenger.of(context).showSnackBar(

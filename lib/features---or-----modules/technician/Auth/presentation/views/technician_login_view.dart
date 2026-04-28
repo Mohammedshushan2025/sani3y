@@ -5,7 +5,7 @@ import 'package:clean_arc/features---or-----modules/shared/auth/presentation/wid
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/widgets/login_header.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/widgets/technician_login_background.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/views/technician_register_view.dart';
-import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_main_view.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/login_cubit.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/login_state.dart';
@@ -75,7 +75,7 @@ class _TechnicianLoginViewState extends State<TechnicianLoginView>
                     listener: (context, state) {
                       if (state is LoginSuccess) {
                         AuthCubit.of(context).loginSuccess(state.auth);
-                        RouteManager.navigateAndPopAll(const TechnicianHomeView());
+                        RouteManager.navigateAndPopAll(const TechnicianMainView());
                       } else if (state is LoginError) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(state.message), backgroundColor: Colors.redAccent),

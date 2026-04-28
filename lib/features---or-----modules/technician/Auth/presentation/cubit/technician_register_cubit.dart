@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/category_entity.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/register_technician_entity.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/repo/technician_auth_repo.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'technician_register_state.dart';
 
 

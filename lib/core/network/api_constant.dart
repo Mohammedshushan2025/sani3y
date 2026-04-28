@@ -16,5 +16,5 @@ class ApiConstants {
   static const String bookingCustomerURL = "booking/customer/{user_id}/"; //GET /booking/customer/{user_id}/
   static const String bookingUpdateStatusURL = "booking/update-status/"; //POST /booking/update-status/  static const String favoriteToggleURL = "favorite/toggle/"; //POST /favorite/toggle/
   static const String favoriteURL = "favorite/toggle/"; //GET /favorite/toggle/
-
+  static const String bookingTechnicianURL = "booking/technician/{user_id}/";
 }

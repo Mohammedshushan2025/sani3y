@@ -14,6 +14,11 @@ import 'package:clean_arc/features---or-----modules/technician/Auth/data/data_so
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/repo/technician_auth_repo.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/repo/technician_auth_repo_impl.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/presentation/cubit/technician_register_cubit.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/data/data_source/technician_booking_remote_data_source.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/data/data_source/technician_booking_remote_data_source_impl.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/data/repo/technician_booking_repo_impl.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/domain/repo/technician_booking_repo.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -29,6 +34,7 @@ Future<void> init() async {
 
   /// TECHNICIAN AUTH
   getIt.registerFactory(() => TechnicianRegisterCubit(getIt()));
+  getIt.registerFactory(() => TechnicianHomeCubit(getIt()));
 
   /// AUTH (commented stubs)
   // getIt.registerFactory(() => LoginCubit(getIt()));
@@ -44,6 +50,9 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<TechnicianAuthRepo>(
     () => TechnicianAuthRepoImpl(remoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton<TechnicianBookingRepo>(
+    () => TechnicianBookingRepoImpl(getIt()),
   );
   // getIt.registerLazySingleton<AuthRepository>(() => AuthRepository(getIt(), getIt()));
   // getIt.registerLazySingleton<HomeRepository>(() => HomeRepository(getIt(), getIt()));
@@ -62,6 +71,9 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<TechnicianAuthRemoteDataSource>(
     () => TechnicianAuthRemoteDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<TechnicianBookingRemoteDataSource>(
+    () => TechnicianBookingRemoteDataSourceImpl(),
   );
   // getIt.registerLazySingleton<AuthDataSource>(() => AuthDataSource());
   // getIt.registerLazySingleton<HomeDataSource>(() => HomeDataSource());
