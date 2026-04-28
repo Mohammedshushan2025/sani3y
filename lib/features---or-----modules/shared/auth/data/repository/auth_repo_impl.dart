@@ -68,6 +68,8 @@ class AuthRepoImpl implements AuthRepo {
           token: auth.token,
           userId: auth.userId,
           userType: auth.userType,
+          fullName: auth.fullName,
+          email: auth.email,
           categoryId: auth.categoryId,
         ));
       }

@@ -7,6 +7,7 @@ import 'package:clean_arc/features---or-----modules/technician/home/presentation
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/widgets/technician_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
@@ -113,6 +114,7 @@ class TechnicianHomeView extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final authState = context.read<AuthCubit>().state;
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -132,7 +134,7 @@ class TechnicianHomeView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -143,8 +145,10 @@ class TechnicianHomeView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'John Smith',
-                    style: TextStyle(
+                    (authState is AuthAuthenticated) 
+                      ? (authState.auth.fullName ?? 'Technician')
+                      : 'Technician',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,

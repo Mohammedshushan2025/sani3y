@@ -27,6 +27,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'password': password,
         },
       );
+      
+      print('RAW LOGIN RESPONSE: ${response.data}');
 
       final apiResponse = ApiResponse<AuthModel>.fromJson(
         response.data as Map<String, dynamic>,

@@ -45,6 +45,8 @@ class TechnicianAuthRemoteDataSourceImpl
         isFormData: true,
       );
 
+      print('RAW TECHNICIAN REGISTER RESPONSE: ${response.data}');
+
       final apiResponse = ApiResponse<AuthModel>.fromJson(
         response.data as Map<String, dynamic>,
         (data) => AuthModel.fromJson(data as Map<String, dynamic>),
