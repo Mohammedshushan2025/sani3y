@@ -25,8 +25,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void loginSuccess(AuthEntity auth) {
-    _repo.saveAuth(auth);
+  void loginSuccess(AuthEntity auth, {bool rememberMe = true}) {
+    if (rememberMe) {
+      _repo.saveAuth(auth);
+    }
     emit(AuthAuthenticated(auth));
   }
 

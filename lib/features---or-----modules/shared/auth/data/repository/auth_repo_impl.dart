@@ -27,7 +27,6 @@ class AuthRepoImpl implements AuthRepo {
         email: email,
         password: password,
       );
-      await localDataSource.saveAuth(authModel);
       return Right(authModel);
     } on ServerException catch (e) {
       return Left(

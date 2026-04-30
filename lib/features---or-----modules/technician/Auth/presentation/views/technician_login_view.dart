@@ -75,7 +75,7 @@ class _TechnicianLoginViewState extends State<TechnicianLoginView>
                   child: BlocListener<LoginCubit, LoginState>(
                     listener: (context, state) {
                       if (state is LoginSuccess) {
-                        AuthCubit.of(context).loginSuccess(state.auth);
+                        AuthCubit.of(context).loginSuccess(state.auth, rememberMe: _rememberMe);
                         RouteManager.navigateAndPopAll(const TechnicianMainView());
                       } else if (state is LoginError) {
                         ScaffoldMessenger.of(context).showSnackBar(
