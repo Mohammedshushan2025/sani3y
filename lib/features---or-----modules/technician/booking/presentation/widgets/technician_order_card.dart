@@ -46,7 +46,7 @@ class TechnicianOrderCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$${service?.price ?? '0'}',
+                '${service?.price ?? '0'} ${'currency'.tr()}',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.orange),
               ),
             ],
