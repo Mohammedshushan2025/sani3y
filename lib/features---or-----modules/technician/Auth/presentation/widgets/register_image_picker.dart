@@ -48,7 +48,7 @@ class RegisterImagePicker extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: const Color(0xFFF5F5FA),
                       border: Border.all(
-                        color: const Color(0xFF6C63FF).withOpacity(0.4),
+                        color: const Color(0xFF6C63FF).withValues(alpha: 0.4),
                         width: 2,
                       ),
                       image: imagePath != null

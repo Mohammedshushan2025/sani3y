@@ -48,7 +48,7 @@ class _SplashLoaderState extends State<SplashLoader>
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white
-                  .withOpacity(0.4 + 0.6 * _dotControllers[i].value),
+                  .withValues(alpha: 0.4 + 0.6 * _dotControllers[i].value),
             ),
           ),
         );

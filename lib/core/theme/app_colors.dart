@@ -11,7 +11,7 @@ class AppColors {
   static final Color error = HexColor.fromHex('#E01942');
 
   ///// GREY COLOR
-  static final Color hintColor = white.withOpacity(.5);
+  static final Color hintColor = white.withValues(alpha: .5);
   static final Color darkGrayColor = HexColor.fromHex('#2D2D2D');
   static final Color grayColor = HexColor.fromHex('#6F6F6F');
   static final Color textColor = HexColor.fromHex('#939393');
