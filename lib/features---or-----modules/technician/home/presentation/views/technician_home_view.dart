@@ -1,4 +1,3 @@
-import 'package:clean_arc/core/injection/injection_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_cubit.dart';
@@ -8,8 +7,6 @@ import 'package:clean_arc/features---or-----modules/technician/home/presentation
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/widgets/technician_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/views/login_view.dart';
 
@@ -20,28 +17,19 @@ class TechnicianHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.read<AuthCubit>().state;
-    int? userId;
-    if (authState is AuthAuthenticated) {
-      userId = authState.auth.userId;
-    }
-
-    return BlocProvider(
-      create: (context) => getIt<TechnicianHomeCubit>()..fetchBookings(userId ?? 1),
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FB),
-        body: BlocBuilder<TechnicianHomeCubit, TechnicianHomeState>(
-          builder: (context, state) {
-            if (state is TechnicianHomeLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TechnicianHomeError) {
-              return Center(child: Text(state.message));
-            } else if (state is TechnicianHomeSuccess) {
-              return _buildBody(context, state);
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FB),
+      body: BlocBuilder<TechnicianHomeCubit, TechnicianHomeState>(
+        builder: (context, state) {
+          if (state is TechnicianHomeLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TechnicianHomeError) {
+            return Center(child: Text(state.message));
+          } else if (state is TechnicianHomeSuccess) {
+            return _buildBody(context, state);
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
@@ -63,7 +51,7 @@ class TechnicianHomeView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _buildHeader(context),
+          _buildHeader(context, state),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -100,8 +88,10 @@ class TechnicianHomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ...filteredBookings.map((booking) => OrderItemCard(
-                      title: booking.serviceDetails?.nameEn ?? 'service'.tr(),
-                      customerName: 'Customer #${booking.customer}', // Placeholder
+                      title: (context.locale.languageCode == 'ar' 
+                          ? booking.serviceDetails?.nameAr 
+                          : booking.serviceDetails?.nameEn) ?? 'service'.tr(),
+                      customerName: '${'customer'.tr()} #${booking.customer}',
                       time: booking.bookingTime ?? '9:00 AM',
                       price: '\$${booking.serviceDetails?.price ?? '0'}',
                     )),
@@ -114,8 +104,33 @@ class TechnicianHomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, TechnicianHomeSuccess state) {
     final authState = context.read<AuthCubit>().state;
+    
+    // Calculations
+    final completedBookings = state.bookings.where((b) => b.status?.toLowerCase() == 'completed').toList();
+    
+    final totalCompletedCount = completedBookings.length;
+    
+    final totalEarnings = completedBookings.fold<double>(0, (sum, b) {
+      final price = double.tryParse(b.serviceDetails?.price ?? '0') ?? 0.0;
+      return sum + price;
+    });
+
+    final now = DateTime.now();
+    final monthlyEarnings = completedBookings.where((b) {
+      if (b.bookingDate == null) return false;
+      try {
+        final date = DateTime.parse(b.bookingDate!);
+        return date.year == now.year && date.month == now.month;
+      } catch (_) {
+        return false;
+      }
+    }).fold<double>(0, (sum, b) {
+      final price = double.tryParse(b.serviceDetails?.price ?? '0') ?? 0.0;
+      return sum + price;
+    });
+
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -140,7 +155,7 @@ class TechnicianHomeView extends StatelessWidget {
                 children: [
                   Text(
                     'welcome_back'.tr(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
@@ -159,14 +174,14 @@ class TechnicianHomeView extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
                   icon: const Icon(Icons.notifications_none, color: Colors.white),
                   onPressed: () {
-                    AuthCubit.of(context).logout();
-                    RouteManager.navigateAndPopAll(const LoginView());
+                    // AuthCubit.of(context).logout();
+                    // RouteManager.navigateAndPopAll(const LoginView());
                   },
                 ),
               ),
@@ -178,15 +193,15 @@ class TechnicianHomeView extends StatelessWidget {
               SummaryCard(
                 icon: Icons.check_circle_outline,
                 title: 'completed'.tr(),
-                value: '127',
+                value: totalCompletedCount.toString(),
                 subtitle: 'total_orders'.tr(),
               ),
               const SizedBox(width: 16),
               SummaryCard(
                 icon: Icons.monetization_on_outlined,
                 title: 'earnings'.tr(),
-                value: '\$8,450',
-                subtitle: '+\$1240 ${'this_month'.tr()}',
+                value: '\$${totalEarnings.toStringAsFixed(0)}',
+                subtitle: '+\$${monthlyEarnings.toStringAsFixed(0)} ${'this_month'.tr()}',
               ),
             ],
           ),

@@ -18,6 +18,7 @@ import 'package:clean_arc/features---or-----modules/technician/booking/data/data
 import 'package:clean_arc/features---or-----modules/technician/booking/data/data_source/technician_booking_remote_data_source_impl.dart';
 import 'package:clean_arc/features---or-----modules/technician/booking/data/repo/technician_booking_repo_impl.dart';
 import 'package:clean_arc/features---or-----modules/technician/booking/domain/repo/technician_booking_repo.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/presentation/manager/technician_booking_cubit.dart';
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -35,6 +36,7 @@ Future<void> init() async {
   /// TECHNICIAN AUTH
   getIt.registerFactory(() => TechnicianRegisterCubit(getIt()));
   getIt.registerFactory(() => TechnicianHomeCubit(getIt()));
+  getIt.registerFactory(() => TechnicianBookingCubit(getIt()));
 
   /// AUTH (commented stubs)
   // getIt.registerFactory(() => LoginCubit(getIt()));

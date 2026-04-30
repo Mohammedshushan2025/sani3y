@@ -56,5 +56,17 @@
   "national_id_invalid": "Invalid National ID",
   "password_mismatch": "Passwords do not match",
   "logout": "Logout",
-  "language": "Language"
+  "language": "Language",
+  "orders_subtitle": "Manage your service requests",
+  "pending_approval": "Pending Approval",
+  "customer_notes": "Customer Notes",
+  "decline": "Decline",
+  "accept": "Accept",
+  "customer": "Customer",
+  "date": "Date",
+  "address": "Address",
+  "no_orders": "No orders found",
+  "status_updated_successfully": "Status updated successfully",
+  "mark_as_completed": "Mark as Completed",
+  "no_notes_provided": "No notes provided"
 }

@@ -56,5 +56,17 @@
   "national_id_invalid": "الرقم القومي غير صحيح",
   "password_mismatch": "كلمة المرور غير متطابقة",
   "logout": "تسجيل الخروج",
-  "language": "اللغة"
+  "language": "اللغة",
+  "orders_subtitle": "إدارة طلبات الخدمة الخاصة بك",
+  "pending_approval": "بانتظار الموافقة",
+  "customer_notes": "ملاحظات العميل",
+  "decline": "رفض",
+  "accept": "قبول",
+  "customer": "العميل",
+  "date": "التاريخ",
+  "address": "العنوان",
+  "no_orders": "لا توجد طلبات",
+  "status_updated_successfully": "تم تحديث الحالة بنجاح",
+  "mark_as_completed": "تحديد كمكتمل",
+  "no_notes_provided": "لا توجد ملاحظات"
 }

@@ -1,5 +1,11 @@
 import 'package:clean_arc/features---or-----modules/technician/home/presentation/views/technician_home_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/booking/presentation/views/technician_orders_view.dart';
 import 'package:clean_arc/features---or-----modules/technician/settings/presentation/views/technician_settings_view.dart';
+import 'package:clean_arc/features---or-----modules/technician/home/presentation/cubit/technician_home_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
+import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_state.dart';
+import 'package:clean_arc/core/injection/injection_app.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -15,60 +21,69 @@ class _TechnicianMainViewState extends State<TechnicianMainView> {
 
   final List<Widget> _pages = [
     const TechnicianHomeView(),
-    Scaffold(body: Center(child: Text('orders'.tr()))),
+    const TechnicianOrdersView(),
     const TechnicianSettingsView(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
+    final authState = context.read<AuthCubit>().state;
+    int? userId;
+    if (authState is AuthAuthenticated) {
+      userId = authState.auth.userId;
+    }
+
+    return BlocProvider(
+      create: (context) => getIt<TechnicianHomeCubit>()..fetchBookings(userId ?? 1),
+      child: Scaffold(
+        body: _pages[_currentIndex],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) => setState(() => _currentIndex = index),
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.orange,
-            unselectedItemColor: Colors.grey,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.home_outlined),
-                activeIcon: const Icon(Icons.home),
-                label: 'home'.tr(),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.shopping_bag_outlined),
-                activeIcon: const Icon(Icons.shopping_bag),
-                label: 'orders'.tr(),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.settings_outlined),
-                activeIcon: const Icon(Icons.settings),
-                label: 'settings'.tr(),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 10,
+                offset: const Offset(0, -5),
               ),
             ],
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: BottomNavigationBar(
+              currentIndex: _currentIndex,
+              onTap: (index) => setState(() => _currentIndex = index),
+              backgroundColor: Colors.white,
+              selectedItemColor: Colors.orange,
+              unselectedItemColor: Colors.grey,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.home_outlined),
+                  activeIcon: const Icon(Icons.home),
+                  label: 'home'.tr(),
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.shopping_bag_outlined),
+                  activeIcon: const Icon(Icons.shopping_bag),
+                  label: 'orders'.tr(),
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.settings_outlined),
+                  activeIcon: const Icon(Icons.settings),
+                  label: 'settings'.tr(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

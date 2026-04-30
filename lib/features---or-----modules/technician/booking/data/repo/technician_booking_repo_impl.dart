@@ -1,3 +1,4 @@
+import 'package:clean_arc/core/enums/booking_status.dart';
 import 'package:clean_arc/core/errors/exceptions.dart';
 import 'package:clean_arc/features---or-----modules/technician/booking/data/data_source/technician_booking_remote_data_source.dart';
 import 'package:clean_arc/features---or-----modules/technician/booking/data/model/technician_booking_model.dart';
@@ -16,6 +17,18 @@ class TechnicianBookingRepoImpl implements TechnicianBookingRepo {
     try {
       final result = await _dataSource.getBookings(userID);
       return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.errorModel.message));
+    } catch (e) {
+      return const Left(ServerFailure(message: 'Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateBookingStatus(int bookingId, BookingStatus status) async {
+    try {
+      await _dataSource.updateBookingStatus(bookingId, status);
+      return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.errorModel.message));
     } catch (e) {

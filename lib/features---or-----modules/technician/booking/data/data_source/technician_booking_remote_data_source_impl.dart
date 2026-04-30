@@ -1,3 +1,4 @@
+import 'package:clean_arc/core/enums/booking_status.dart';
 import 'package:dio/dio.dart';
 import 'package:clean_arc/core/errors/exceptions.dart';
 import 'package:clean_arc/core/network/api_constant.dart';
@@ -10,21 +11,8 @@ class TechnicianBookingRemoteDataSourceImpl implements TechnicianBookingRemoteDa
   @override
   Future<List<TechnicianBooking>> getBookings(int userID) async {
     try {
-      // Note: In a real app, user_id would come from storage or auth state.
-      // For now, we'll assume the helper handles auth headers if needed.
-      // The URL template "booking/technician/{user_id}/" needs a user_id.
-      // I'll need to check how to get the current user ID.
-      
-      // For the purpose of this task, I'll use a placeholder or check if I can get it from storage.
-      // Actually, many APIs use 'me' or similar, or it's handled by the token.
-      // I'll assume the user ID is needed in the URL as per ApiConstants.
-      
-      // Let's assume for now we fetch it for the logged in user.
-      // I'll use a hardcoded ID for demonstration if I can't find the real one, 
-      // but ideally I should get it from a dependency.
-      
       final response = await DioHelper.getData(
-        url: ApiConstants.bookingTechnicianURL.replaceFirst('{user_id}', userID.toString()), // Placeholder ID
+        url: ApiConstants.bookingTechnicianURL.replaceFirst('{user_id}', userID.toString()),
       );
 
       final apiResponse = ApiResponse<List<TechnicianBooking>>.fromJson(
@@ -35,6 +23,22 @@ class TechnicianBookingRemoteDataSourceImpl implements TechnicianBookingRemoteDa
       );
 
       return apiResponse.data ?? [];
+    } on DioException catch (e) {
+      handelDioException(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateBookingStatus(int bookingId, BookingStatus status) async {
+    try {
+      await DioHelper.postData(
+        url: ApiConstants.bookingUpdateStatusURL,
+        data: {
+          'booking_id': bookingId,
+          'status': status.name, // "accepted" or "rejected"
+        },
+      );
     } on DioException catch (e) {
       handelDioException(e);
       rethrow;
