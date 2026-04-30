@@ -42,11 +42,16 @@ class TechnicianOrderCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   (context.locale.languageCode == 'ar' ? service?.nameAr : service?.nameEn) ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
+              const SizedBox(width: 8),
               Text(
                 '${service?.price ?? '0'} ${'currency'.tr()}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.orange),
               ),
             ],
@@ -152,6 +157,8 @@ class _InfoRow extends StatelessWidget {
           Expanded(
             child: Text(
               text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(color: color ?? Colors.grey[800], fontSize: 14),
             ),
           ),

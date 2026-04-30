@@ -164,6 +164,8 @@ class TechnicianHomeView extends StatelessWidget {
                     (authState is AuthAuthenticated) 
                       ? (authState.auth.fullName ?? 'technician'.tr())
                       : 'technician'.tr(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,

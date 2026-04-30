@@ -68,5 +68,6 @@
   "no_orders": "لا توجد طلبات",
   "status_updated_successfully": "تم تحديث الحالة بنجاح",
   "mark_as_completed": "تحديد كمكتمل",
-  "no_notes_provided": "لا توجد ملاحظات"
+  "no_notes_provided": "لا توجد ملاحظات",
+  "currency": "ر.س"
 }

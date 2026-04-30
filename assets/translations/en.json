@@ -68,5 +68,6 @@
   "no_orders": "No orders found",
   "status_updated_successfully": "Status updated successfully",
   "mark_as_completed": "Mark as Completed",
-  "no_notes_provided": "No notes provided"
+  "no_notes_provided": "No notes provided",
+  "currency": "SAR"
 }
