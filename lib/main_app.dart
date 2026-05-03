@@ -1,6 +1,5 @@
 import 'package:clean_arc/core/injection/injection_app.dart';
 import 'package:clean_arc/core/routes/navigator_push.dart';
-import 'package:clean_arc/core/theme/light_theme.dart';
 import 'package:clean_arc/features---or-----modules/shared/auth/presentation/cubit/auth_cubit.dart';
 import 'package:clean_arc/features---or-----modules/shared/splash/presentation/views/splash_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,7 +17,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         locale: context.locale,
-        theme: themeDataLight(),
+        // theme: themeDataLight(),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         navigatorKey: navigatorKey,
@@ -27,7 +26,8 @@ class MainApp extends StatelessWidget {
             breakpoints: [
               const Breakpoint(start: 0, end: 600, name: MOBILE),
               const Breakpoint(start: 601, end: 1200, name: TABLET),
-              const Breakpoint(start: 1201, end: double.infinity, name: DESKTOP),
+              const Breakpoint(
+                  start: 1201, end: double.infinity, name: DESKTOP),
             ],
             child: Builder(
               builder: (responsiveContext) {
