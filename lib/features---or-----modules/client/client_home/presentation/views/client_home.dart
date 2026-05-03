@@ -1,4 +1,6 @@
+import 'package:clean_arc/core/routes/navigator_push.dart';
 import 'package:clean_arc/core/theme/app_colors.dart';
+import 'package:clean_arc/features---or-----modules/client/category_services/views/category_services_view.dart';
 import 'package:flutter/material.dart';
 
 // ════════════════════════════════════════════════
@@ -343,10 +345,14 @@ class _CategoriesRow extends StatelessWidget {
   const _CategoriesRow();
 
   static const _cats = [
-    _Category('سباكة', Icons.water_drop_outlined, AppColors.catBlue),
-    _Category('كهرباء', Icons.bolt_rounded, AppColors.catYellow),
-    _Category('سيارات', Icons.directions_car_outlined, AppColors.catRed),
-    _Category('نجارة', Icons.handyman_outlined, AppColors.catGreen),
+    _Category('سباكة', Icons.water_drop_outlined, AppColors.catBlue,
+        CategoriesData.plumbing),
+    _Category('كهرباء', Icons.bolt_rounded, AppColors.catYellow,
+        CategoriesData.electrical),
+    _Category('سيارات', Icons.directions_car_outlined, AppColors.catRed,
+        CategoriesData.carService),
+    _Category(
+        'تكييف', Icons.ac_unit_rounded, AppColors.catGreen, CategoriesData.ac),
   ];
 
   @override
@@ -359,7 +365,12 @@ class _CategoriesRow extends StatelessWidget {
         children: _cats
             .map((c) => Padding(
                   padding: const EdgeInsets.only(left: 12),
-                  child: _CategoryChip(category: c),
+                  child: GestureDetector(
+                      onTap: () {
+                        RouteManager.navigateTo(
+                            CategoryServicesView(category: c.serviceCategory));
+                      },
+                      child: _CategoryChip(category: c)),
                 ))
             .toList(),
       ),
@@ -371,7 +382,8 @@ class _Category {
   final String label;
   final IconData icon;
   final Color color;
-  const _Category(this.label, this.icon, this.color);
+  final ServiceCategory serviceCategory;
+  const _Category(this.label, this.icon, this.color, this.serviceCategory);
 }
 
 class _CategoryChip extends StatelessWidget {
