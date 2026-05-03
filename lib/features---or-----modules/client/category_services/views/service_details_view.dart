@@ -167,9 +167,9 @@ class _ServiceHeroHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 220,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: AppColors.headerGradient,
-        borderRadius: const BorderRadius.vertical(
+        borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(28),
         ),
       ),
@@ -321,11 +321,11 @@ class _ServiceInfoSection extends StatelessWidget {
 class _WarrantyBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
         Icon(Icons.verified_outlined, color: AppColors.teal, size: 16),
-        const SizedBox(width: 6),
-        const Text(
+        SizedBox(width: 6),
+        Text(
           'يشمل ضمان',
           style: TextStyle(
             fontSize: 13,
