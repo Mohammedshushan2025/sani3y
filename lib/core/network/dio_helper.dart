@@ -1,19 +1,14 @@
 import 'package:dio/dio.dart';
 
-// ════════════════════════════════════════════════
-//  DIO HELPER — صنايعي
-//  Central HTTP client with timeout, logging, and
-//  helpers for GET / POST (JSON + multipart) / PUT / PATCH / DELETE.
-// ════════════════════════════════════════════════
+import 'api_constant.dart';
 
 class DioHelper {
   static late Dio _dio;
 
-  // ── Initialise once in main() ──────────────────
   static void init() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://easyservice.pythonanywhere.com/api/accounts/',
+        baseUrl: ApiConstants.baseURL,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
         sendTimeout: const Duration(seconds: 30),

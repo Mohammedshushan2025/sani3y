@@ -1,11 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/register_technician_entity.dart';
 
-// ════════════════════════════════════════════════
-//  REGISTER TECHNICIAN MODEL — Data Layer
-//  Converts the domain entity → Dio FormData
-//  (multipart because of the profile image field).
-// ════════════════════════════════════════════════
+
 
 class RegisterTechnicianModel {
   final String email;

@@ -1,6 +1,3 @@
-// ════════════════════════════════════════════════
-//  REGISTER TECHNICIAN ENTITY — Domain Layer
-// ════════════════════════════════════════════════
 
 class RegisterTechnicianEntity {
   final String email;

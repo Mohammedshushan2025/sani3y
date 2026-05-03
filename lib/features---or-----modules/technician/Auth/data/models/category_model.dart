@@ -1,11 +1,5 @@
 import 'package:clean_arc/features---or-----modules/technician/Auth/domain/entities/category_entity.dart';
 
-// ════════════════════════════════════════════════
-//  CATEGORY MODEL — Data Layer
-//  Maps the API JSON to the CategoryEntity.
-//  API shape: { "id", "name_ar", "name_en", "image", "color" }
-// ════════════════════════════════════════════════
-
 class CategoryModel extends CategoryEntity {
   const CategoryModel({
     required super.id,

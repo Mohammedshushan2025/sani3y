@@ -1,8 +1,3 @@
-// ════════════════════════════════════════════════
-//  API RESPONSE WRAPPER — صنايعي
-//  Generic wrapper for the standard API envelope:
-//  { "success": bool, "message": String, "data": T? }
-// ════════════════════════════════════════════════
 
 class ApiResponse<T> {
   final bool success;
